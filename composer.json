@@ -1,0 +1,21 @@
+{
+  "name": "sterling/cascade-soft-deletes",
+  "description": "Soft delete and restore child relationships when soft deleting an object",
+  "type": "Library",
+  "require": {
+    "illuminate/support": "^5.1"
+  },
+  "autoload": {
+    "psr-0": {
+      "Sterling\\CascadeSoftDeletes": "src/"
+    }
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tom Sinclair",
+      "email": "tsinclair@sterlingsolutions.co.uk"
+    }
+  ],
+  "minimum-stability": "dev"
+}

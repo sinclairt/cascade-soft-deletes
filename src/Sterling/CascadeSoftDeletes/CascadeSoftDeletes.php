@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace Sterling\CascadeSoftDeletes;
 
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 

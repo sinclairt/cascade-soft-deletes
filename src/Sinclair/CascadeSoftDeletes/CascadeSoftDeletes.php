@@ -2,6 +2,7 @@
 
 namespace Sinclair\CascadeSoftDeletes;
 
+use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
 trait CascadeSoftDeletes
@@ -12,8 +13,16 @@ trait CascadeSoftDeletes
         static::deleting(function ($model)
         {
             foreach ($model->getChildren() as $child)
-                $model->$child()
-                      ->delete();
+            {
+                $relation = $model->$child();
+
+                if ($relation->class == Collection::class)
+                    foreach ($relation as $item)
+                        $item->delete();
+                else
+                    $relation->delete();
+            }
+
         });
 
         // we need th parent to be restored before it can be attached
@@ -23,6 +32,13 @@ trait CascadeSoftDeletes
                 $model->$child()->onlyTrashed()
                       ->restore();
         });
+    }
+
+    public static function addChild($value)
+    {
+        self::getChildren();
+
+        self::$children[] = $value;
     }
 
     private function getChildren()

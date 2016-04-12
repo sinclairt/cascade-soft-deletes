@@ -14,7 +14,7 @@ trait CascadeSoftDeletes
         {
             foreach ( $model->getChildren() as $child )
             {
-                $relation = $model->$child();
+                $relation = $model->$child;
 
                 if ( $relation->class == Collection::class )
                     foreach ( $relation as $item )

@@ -10,14 +10,14 @@ trait CascadeSoftDeletes
     public static function bootCascadeSoftDeletes()
     {
         // soft delete the children before deleting the parent
-        static::deleting(function ($model)
+        static::deleting(function ( $model )
         {
-            foreach ($model->getChildren() as $child)
+            foreach ( $model->getChildren() as $child )
             {
                 $relation = $model->$child();
 
-                if ($relation->class == Collection::class)
-                    foreach ($relation as $item)
+                if ( $relation->class == Collection::class )
+                    foreach ( $relation as $item )
                         $item->delete();
                 else
                     $relation->delete();
@@ -26,24 +26,25 @@ trait CascadeSoftDeletes
         });
 
         // we need th parent to be restored before it can be attached
-        static::restored(function ($model)
+        static::restored(function ( $model )
         {
-            foreach ($model->getChildren() as $child)
-                $model->$child()->onlyTrashed()
+            foreach ( $model->getChildren() as $child )
+                $model->$child()
+                      ->onlyTrashed()
                       ->restore();
         });
     }
 
-    public static function addChild($value)
+    public function addChild( $value )
     {
-        self::getChildren();
+        $this->getChildren();
 
-        self::$children[] = $value;
+        $this->children[] = $value;
     }
 
     private function getChildren()
     {
-        if (isset($this->children))
+        if ( isset( $this->children ) )
             return $this->children;
 
         throw new NotAcceptableHttpException('The variable "$children" needs to be defined!');

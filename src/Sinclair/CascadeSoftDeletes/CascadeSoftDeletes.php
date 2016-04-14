@@ -13,15 +13,8 @@ trait CascadeSoftDeletes
         static::deleting(function ( $model )
         {
             foreach ( $model->getChildren() as $child )
-            {
-                $relation = $model->$child;
-
-                if ( $relation instanceof Collection )
-                    foreach ( $relation as $item )
-                        $item->delete();
-                else
-                    $relation->delete();
-            }
+                $model->$child()
+                      ->delete();
 
         });
 

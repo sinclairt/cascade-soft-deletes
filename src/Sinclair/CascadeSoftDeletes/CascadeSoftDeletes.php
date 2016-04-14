@@ -16,7 +16,7 @@ trait CascadeSoftDeletes
             {
                 $relation = $model->$child;
 
-                if ( $relation->class == Collection::class )
+                if ( $relation instanceof Collection )
                     foreach ( $relation as $item )
                         $item->delete();
                 else

@@ -1,5 +1,5 @@
 {
-  "name": "sinclair/cascade-soft-deletes",
+  "name": "sinclairt/cascade-soft-deletes",
   "description": "Soft delete and restore child relationships when soft deleting an object",
   "type": "Library",
   "require": {
